@@ -9,16 +9,23 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Setup node 16
+      - 
+        uses: actions/checkout@v3
+      - 
+        name: Setup node 16
         uses: actions/setup-node@v3.0.0
         with:
           node-version: '16'
-      - run: npm install
-      - run: npm start
-      - run: npm test
-      - run: npm run cover
-      - uses: actions/upload-artifact@v3
+      - 
+        run: npm install
+      - 
+        run: npm start
+      - 
+        run: npm test
+      - 
+        run: npm run cover
+      - 
+        uses: actions/upload-artifact@v3
         with:
           name: reports
           path: /home/runner/work/quick-example-of-testing-in-nodejs/quick-example-of-testing-in-nodejs/reports/
@@ -48,4 +55,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/app:$APP_VERSION
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/Weather:${{ env.APP_VERSION }}
