@@ -1,10 +1,13 @@
 name: test nodejs
-on: push
+on:
+  push:
+    branches:
+      - 'main'
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Setup node 16
         uses: actions/setup-node@v3.0.0
         with:
@@ -13,7 +16,16 @@ jobs:
       - run: npm start
       - run: npm test
       - run: npm run cover
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: reports
           path: /home/runner/work/quick-example-of-testing-in-nodejs/quick-example-of-testing-in-nodejs/reports/
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
